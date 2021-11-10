@@ -1,0 +1,44 @@
+
+#vcoin ID
+me-name=tickerjiaoyiqu
+#法币表名（人民币）
+balance-tab=account
+#数字币表名
+vcoin-tab=account
+#法币类型：jiaoyiqu余额账户
+cny-type-available=jyqNor
+#法币类型：jiaoyiqu冻结账户
+cny-type-frozen=jyqLock
+#数字币类型：ticker可用账户 --> 对应commons下Acctype.properties的 XXX_NORMAL
+vcoin-type-available=eigSeq
+#数字币类型：ticker冻结账户 --> 对应commons下Acctype.properties的 XXX_LOCK
+vcoin-type-frozen=ninSeq
+#法币类型：系统 --> 对应commons下Acctype.properties的 FEE_XXXUSDT_USDT
+cny-type-system=secSeq
+#数字币类型：系统  --> 对应commons下Acctype.properties的 FEE_XXXUSDT_XXX
+vcoin-type-system=firSeq
+#成交记录表名
+match-result-tab=ex_trade_tickerjiaoyiqu
+#委托单表名（可包含市价单，order_type=0为限价单，1为市价单）
+order-queue-tab=ex_order_tickerjiaoyiqu
+#市价单表名（可与委托单表同名，用order_type=1表示市价单，即使分表，也需要设置order_type=1来保证兼容）
+market-order-queue-tab=ex_order_tickerjiaoyiqu
+#流水表
+balance-log-tab=transaction
+#资金变动表（当前撮合系统并不操作）
+balance-history-tab=history_account
+#最小交易单位，文交品为1；数字货币建议为0.0001
+min-vc-trade-vol=0.0000000000000001
+#本机IP，用于写入transaction表用
+op-ip=127.0.0.1
+#撮合操作对应的系统用户ID
+op-uid=1
+#是否全部加载，当为true时以下的load-为前缀的配置都不生效
+load-all=true
+#每轮撮合最大加载量（需大于单边盘口单，例如1000,避免加载到的都是单边单）
+load-order-limit=2000
+#盘口加载范围指每轮加载的可能成交量，即卖单加载比卖单价格乘以这个值的价格高的订单，加载买单则反过来
+#买单盘口加载范围（小于1）
+load-range-buy=0.9
+#卖单盘口加载范围（大于1）
+load-range-sell=1.1

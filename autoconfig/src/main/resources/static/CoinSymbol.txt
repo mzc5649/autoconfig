@@ -1,0 +1,2 @@
+
+TICKER("ticker",0,0,1,"","ticker","/res/img/coin/new/ticker.png",countNum,usdtNum,0),

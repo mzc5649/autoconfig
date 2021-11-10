@@ -1,0 +1,2 @@
+
+tickerjiaoyiqu("tickerjiaoyiqu",priceLen,plen,prLen,0),

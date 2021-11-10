@@ -1,0 +1,2 @@
+
+confirmMap.put("TICKER", querenshu);

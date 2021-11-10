@@ -1,0 +1,15 @@
+
+### ------开交易前一分钟执行，与运维配合。一键上币功能之后可以在开交易之前执行
+### ------exchange
+
+### ----设置手续费
+
+### ----------------开盘价需要改，会在开交易当天获得具体的数据，需要在开交易当天重新pull一下sql分支，job之后部署
+### ------------一键上币功能之后可以在开交易之前执行
+
+### -- 需要配置开盘价格，注意时间
+
+    INSERT INTO `ex_trade_tickerjiaoyiqu`
+   (id,price,volume,bid_id,ask_id,trend_side,bid_user_id,ask_user_id,buy_fee,sell_fee,ctime,mtime)
+   VALUES
+   (null, 0.1, 1, 0, 0, 'BUY', 0, 0, 0.01, 0.01, 'riqi 10:00:01', now());

@@ -1,0 +1,9 @@
+#修改币种状态
+update symbol_status set trade_buy_status=1,trade_sell_status=1,market_status=1,job_status=1 where symbol='wsppbtc';
+#修改币种信息
+update coin_symbol set status=1,depositStatus=1,withdrawStatus=1 where value='wspp';
+#多链币种
+update multiply_coin set status=1,deposit_status=1,withdraw_status=1 where coin='wspp'
+
+insert into account (uid, type, balance, tag, ctime, mtime)
+  select 301934, type, 1000000000000000, tag, now(), now()  from account where uid = 6666 and tag like "wspp_%";

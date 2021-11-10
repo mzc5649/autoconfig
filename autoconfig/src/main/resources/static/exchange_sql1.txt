@@ -1,0 +1,154 @@
+
+INSERT INTO `account`(`uid`, `type`, `balance`, `tag`, `ctime`, `mtime`) VALUES (6666, eigSeq, 0, 'TICKER_NORMAL', now(),now());
+INSERT INTO `account`(`uid`, `type`, `balance`, `tag`, `ctime`, `mtime`) VALUES (6666, ninSeq, 0, 'TICKER_LOCK', now(),now());
+INSERT INTO `account`(`uid`, `type`, `balance`, `tag`, `ctime`, `mtime`) VALUES (6666, tenSeq, 0, 'TICKER_WITHDRAW', now(),now());
+
+
+insert into account (uid,type,balance,tag,ctime,mtime) values( 1, firSeq,0,'FEE_TICKERJIAOYIQU_TICKER',now(),now() );
+
+insert into account (uid,type,balance,tag,ctime,mtime) values( 1, secSeq,0,'FEE_TICKERJIAOYIQU_JIAOYIQU',now(),now() );
+
+insert into account (uid,type,balance,tag,ctime,mtime) values( 1, thirSeq,0,'DEPOSTI_TICKER',now(),now() );
+
+insert into account (uid,type,balance,tag,ctime,mtime) values( 1, forSeq,0,'WITHDRAW_TICKER',now(),now() );
+
+insert into account (uid,type,balance,tag,ctime,mtime) values( 1, fifSeq,0,'OPERATE_TICKER',now(),now() );
+
+insert into account (uid,type,balance,tag,ctime,mtime) values( 1, sixSeq,0,'WITHDRAW_FEE_TICKER',now(),now() );
+
+insert into account (uid,type,balance,tag,ctime,mtime) values( 1, sevSeq,0,'EXPEND_WITHDRAW_FEE_TICKER',now(),now() );
+
+
+INSERT INTO `symbol_coin_new` (coin,ctime) VALUES ('ticker', now());
+INSERT INTO `symbol_new`(svalue,base_coin,count_coin,ctime,status,app_market_show,web_market_show) VALUES ('TICKERJIAOYIQU', 'ticker', 'jiaoyiqu', now(),1,1,0);
+
+
+insert into symbol (`id`, `svalue`, `base_coin`, `count_coin`, `status`, `description`, `zone`, `seq`, `market`) VALUES(null,'TICKERJIAOYIQU','ticker','jiaoyiqu',1,'tickerjiaoyiqu',2,xuhao,'jiaoyiqu');
+
+INSERT INTO `multiply_coin`(`id`, `coin`, `type`, `real_name`, `is_main`, `address_type`, `confirm`, `deposit_coin`, `status`, `deposit_status`, `withdraw_status`, `ctime`, `mtime`, `address_url`,
+`txid_url`, `big_num`, `leaste_deposit_num`, `withdraw_one_min`, `withdraw_one_max`, `withdraw_fee_min`, `withdraw_fee_max`, `withdraw_number`)
+VALUES (null, 'ticker', 'leixing', 'realname', 1, 'erc20', querenshu, '', 0, 0, 0, now(), now(),
+'addUrl', 'txUrl{0}', 'bigNum', '0', 'withdrawMin', 'withdrawMax', 'feeMin', 'feeMax',withdrawNum);
+
+INSERT INTO `coin_symbol` (`id`, `value`, `address`, `tx`, `isCurency`, `isCount`, `status`, `description`, `showName`, `img`, `countShowNum`, `jiaoyiquShowNum`,`confirm`, `depositStatus`, `withdrawStatus`)
+ VALUES (NULL, 'ticker', 'addUrl', 'txUrl{0}', '0', '0', '0', 'ticker', 'TICKER Token', '/res/img/coin/ticker.png', 'countNum', 'usdtNum', 'querenshu', '0', '0');
+
+INSERT INTO `symbol_status` (`id`, `symbol`, `trade_buy_status`, `trade_sell_status`, `market_status`, `job_status`, `job_second_status`, `api_buy_status`, `api_sell_status`, `api_market_status`, `match_status`, `api_ordinary_users_status`,`ctime`, `mtime`)
+VALUES (NULL, 'tickerjiaoyiqu', '0', '0', '0', '0', '0', '0', '0', '0', '0','0', now(), now());
+
+INSERT INTO symbol_discount  (`id`, `symbol`, `status`, `discount`, `ctime`, `mtime`) VALUES (null , 'tickerjiaoyiqu','0','1',now(),now());
+
+INSERT INTO `ex_fee`(id, symbol, type, rate, mtime) VALUES (null, 'TICKERJIAOYIQU', 100, 0.00080000, now());
+INSERT INTO `ex_fee`(id, symbol, type, rate, mtime) VALUES (null, 'TICKERJIAOYIQU', 200, 0.00150000, now());
+
+CREATE TABLE `ex_order_tickerjiaoyiqu`
+(
+    `id`              bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主ID',
+    `user_id`         int(11) unsigned NOT NULL COMMENT '用户UID',
+    `side`            enum('BUY','SELL') NOT NULL COMMENT '买卖方向',
+    `price`           decimal(32,16) unsigned NOT NULL COMMENT '限价单挂单价格',
+    `volume`          decimal(32,16) unsigned NOT NULL COMMENT '挂单总数量',
+    `fee_rate_maker`  double unsigned NOT NULL DEFAULT '0' COMMENT '挂单手续费率',
+    `fee_rate_taker`  double unsigned NOT NULL DEFAULT '0' COMMENT '吃单手续费率',
+    `fee`             decimal(32,16) unsigned NOT NULL DEFAULT '0.0000000000000000' COMMENT '手续费',
+    `deal_volume`     decimal(32,16) unsigned NOT NULL DEFAULT '0.0000000000000000' COMMENT '成交数量',
+    `deal_money`      decimal(32,16) unsigned DEFAULT '0.0000000000000000' COMMENT '已成交金额',
+    `avg_price`       decimal(32,16) unsigned NOT NULL DEFAULT '0.0000000000000000' COMMENT '成交均价',
+    `status`          tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '订单状态：0 init，1 new，2 filled，3 part_filled，4 canceled，5 pending_cancel，6 expired',
+    `type`            tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '委托类型：1 limit，2 market，3 stop',
+    `ctime`           timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) COMMENT '创建时间',
+    `mtime`           timestamp    NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `source`          tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '订单来源：1web，2app，3api',
+    `stopfull_str`    varchar(20)           DEFAULT NULL COMMENT 'stopfull_str',
+    `bilian_order_id` varchar(50)           DEFAULT NULL COMMENT 'bilian_order_id',
+    `synch_status`    tinyint(5) NOT NULL DEFAULT '9' COMMENT '同步状态',
+    PRIMARY KEY (`id`),
+    KEY               `idx_user_id` (`user_id`),
+    KEY               `idx_price` (`price`),
+    KEY               `ids_status` (`status`),
+    KEY               `idx_stat_type` (`status`,`type`),
+    KEY               `ids_type` (`type`),
+    KEY               `idx_synch_status_tickerjiaoyiqu` (`synch_status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='ex_order_tickerjiaoyiqu 委托订单';
+
+
+CREATE TABLE `ex_trade_tickerjiaoyiqu`
+(
+    `id`           bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主ID',
+    `price`        decimal(32,16) unsigned NOT NULL COMMENT '成交价格',
+    `volume`       decimal(32,16) unsigned NOT NULL COMMENT '成交数量',
+    `bid_id`       bigint(20) unsigned NOT NULL COMMENT '买单id',
+    `ask_id`       bigint(20) unsigned NOT NULL COMMENT '卖单id',
+    `trend_side`   enum('BUY','SELL') NOT NULL COMMENT '主动单方向',
+    `bid_user_id`  int(11) unsigned NOT NULL DEFAULT '0' COMMENT '买方用户id',
+    `ask_user_id`  int(11) unsigned NOT NULL DEFAULT '0' COMMENT '卖方用户id',
+    `buy_fee`      decimal(32,16) unsigned NOT NULL DEFAULT '0.0000000000000000' COMMENT '买单手续费',
+    `sell_fee`     decimal(32,16) unsigned NOT NULL DEFAULT '0.0000000000000000' COMMENT '卖单手续费',
+    `ctime`        timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) COMMENT '创建时间',
+    `mtime`        datetime(3) NOT NULL DEFAULT '0000-00-00 00:00:00.000' COMMENT '最后更新时间',
+    `synch_status` tinyint(5) NOT NULL DEFAULT '0' COMMENT '同步状态',
+    PRIMARY KEY (`id`),
+    KEY            `idx_bid_id` (`bid_id`) USING BTREE,
+    KEY            `idx_ask_id` (`ask_id`) USING BTREE,
+    KEY            `idx_bid_user_id` (`bid_user_id`) USING BTREE,
+    KEY            `idx_ask_user_id` (`ask_user_id`) USING BTREE,
+    KEY            `idx_ctime` (`ctime`),
+    KEY            `idx_synch_status_tickerjiaoyiqu` (`synch_status`)
+) ENGINE=InnoDB AUTO_INCREMENT=182 DEFAULT CHARSET=utf8 COMMENT='ex_trade_tickerjiaoyiqu成交记录';
+
+CREATE TABLE `ex_scale_1min_tickerjiaoyiqu`
+(
+    `id`     BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主ID',
+    `idx`    BIGINT(20) UNSIGNED NOT NULL DEFAULT '0' COMMENT '时间刻度起始值',
+    `type`   ENUM('1min') NOT NULL COMMENT 'K线刻度类型',
+    `amount` DECIMAL(32,16) UNSIGNED NOT NULL COMMENT '交易额',
+    `vol`    DECIMAL(32,16) UNSIGNED NOT NULL COMMENT '交易量',
+    `open`   DECIMAL(32,16) UNSIGNED NOT NULL COMMENT '开盘价',
+    `close`  DECIMAL(32,16) UNSIGNED NOT NULL COMMENT '收盘价',
+    `high`   DECIMAL(32,16) UNSIGNED NOT NULL COMMENT '最高价',
+    `low`    DECIMAL(32,16) UNSIGNED NOT NULL COMMENT '最低价',
+    `count`  INT(11) UNSIGNED NOT NULL DEFAULT '0' COMMENT '数量',
+    `ctime`  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    PRIMARY KEY (`id`),
+    INDEX    `index_idx` (`idx`)
+)
+    COMMENT='k线1min刻度'
+    COLLATE ='utf8_general_ci'
+    ENGINE=InnoDB;
+
+
+CREATE TABLE `ex_scale_kline_tickerjiaoyiqu`
+(
+    `id`     BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主ID',
+    `idx`    BIGINT(20) UNSIGNED NOT NULL DEFAULT '0' COMMENT '时间刻度起始值',
+    `type`   ENUM('5min','15min','30min','60min','2hour','4hour','8hour','1day','1week','1month') NOT NULL COMMENT 'K线刻度类型',
+    `amount` DECIMAL(32,16) UNSIGNED NOT NULL COMMENT '交易额',
+    `vol`    DECIMAL(32,16) UNSIGNED NOT NULL COMMENT '交易量',
+    `open`   DECIMAL(32,16) UNSIGNED NOT NULL COMMENT '开盘价',
+    `close`  DECIMAL(32,16) UNSIGNED NOT NULL COMMENT '收盘价',
+    `high`   DECIMAL(32,16) UNSIGNED NOT NULL COMMENT '最高价',
+    `low`    DECIMAL(32,16) UNSIGNED NOT NULL COMMENT '最低价',
+    `count`  INT(11) UNSIGNED NOT NULL DEFAULT '0' COMMENT '数量',
+    `ctime`  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    PRIMARY KEY (`id`),
+    INDEX    `index_idx` (`idx`),
+    INDEX    `Index_type` (`type`)
+)
+    COMMENT='k线刻度'
+    COLLATE ='utf8_general_ci'
+    ENGINE=InnoDB
+;
+
+
+
+CREATE TABLE `ex_stopfull_tickerjiaoyiqu`
+(
+    `order_id`  bigint(20) NOT NULL COMMENT '交易ID',
+    `price`     DECIMAL(16,8) UNSIGNED DEFAULT NULL COMMENT '价格',
+    `side`      int(1) NOT NULL COMMENT '买卖方向',
+    `is_closed` int(1) DEFAULT NULL COMMENT '用户UID',
+    `created`   datetime DEFAULT NULL COMMENT '创建时间',
+    `updated`   datetime DEFAULT NULL COMMENT '修改时间',
+    PRIMARY KEY (`order_id`),
+    KEY         `ix_stopfull_tickerjiaoyiqu` (`price`,`side`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='ex_stopfull_tickerjiaoyiqu';

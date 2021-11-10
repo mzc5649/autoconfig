@@ -1,0 +1,25 @@
+
+INSERT INTO `account`(`uid`, `type`, `balance`, `tag`, `ctime`, `mtime`) VALUES (6666, eigSeq, 0, 'TICKER_NORMAL', now(),now());
+INSERT INTO `account`(`uid`, `type`, `balance`, `tag`, `ctime`, `mtime`) VALUES (6666, ninSeq, 0, 'TICKER_LOCK', now(),now());
+INSERT INTO `account`(`uid`, `type`, `balance`, `tag`, `ctime`, `mtime`) VALUES (6666, tenSeq, 0, 'TICKER_WITHDRAW', now(),now());
+
+insert into account (uid,type,balance,tag,ctime,mtime) values( 1, thirSeq,0,'DEPOSTI_TICKER',now(),now() );
+
+insert into account (uid,type,balance,tag,ctime,mtime) values( 1, forSeq,0,'WITHDRAW_TICKER',now(),now() );
+
+insert into account (uid,type,balance,tag,ctime,mtime) values( 1, fifSeq,0,'OPERATE_TICKER',now(),now() );
+
+insert into account (uid,type,balance,tag,ctime,mtime) values( 1, sixSeq,0,'WITHDRAW_FEE_TICKER',now(),now() );
+
+insert into account (uid,type,balance,tag,ctime,mtime) values( 1, sevSeq,0,'EXPEND_WITHDRAW_FEE_TICKER',now(),now() );
+
+
+INSERT INTO `symbol_coin_new` (coin,ctime) VALUES ('ticker', now());
+
+INSERT INTO `multiply_coin`(`id`, `coin`, `type`, `real_name`, `is_main`, `address_type`, `confirm`, `deposit_coin`, `status`, `deposit_status`, `withdraw_status`, `ctime`, `mtime`, `address_url`,
+`txid_url`, `big_num`, `leaste_deposit_num`, `withdraw_one_min`, `withdraw_one_max`, `withdraw_fee_min`, `withdraw_fee_max`, `withdraw_number`)
+VALUES (null, 'ticker', 'leixing', 'realname', 1, 'erc20', querenshu, '', 0, 0, 0, now(), now(),
+'addUrl', 'txUrl{0}', 'bigNum', '0', 'withdrawMin', 'withdrawMax', 'feeMin', 'feeMax',withdrawNum);
+
+INSERT INTO `coin_symbol` (`id`, `value`, `address`, `tx`, `isCurency`, `isCount`, `status`, `description`, `showName`, `img`, `countShowNum`, `usdtShowNum`,`confirm`, `depositStatus`, `withdrawStatus`)
+ VALUES (NULL, 'ticker', 'addUrl', 'txUrl{0}', '0', '0', '0', 'ticker', 'TICKER Token', '/res/img/coin/ticker.png', 'countNum', 'usdtNum', 'querenshu', '0', '0');
